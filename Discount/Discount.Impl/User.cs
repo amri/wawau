@@ -1,10 +1,17 @@
-﻿namespace Discount.Impl
+﻿using System;
+
+namespace Discount.Impl
 {
     public class User
     {
     }
 
-    class Affiliate : User
+    public class Customer : User
+    {
+        public DateTime JoinedDate { get; set; }
+    }
+
+    public class Affiliate : User
     {
     }
 }

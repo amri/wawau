@@ -1,4 +1,6 @@
-﻿namespace Discount.Impl
+﻿using System;
+
+namespace Discount.Impl
 {
     public class UserBuilder
     {
@@ -14,6 +16,17 @@
             {
                 _user = new Affiliate();
             }
+            else if(userType == UserType.Customer)
+            {
+                _user = new Customer();
+            }
+            return this;
+        }
+
+        public UserBuilder AddJoinDate(DateTime joinedDateTime)
+        {
+            var customer = _user as Customer;
+            customer.JoinedDate = joinedDateTime;
             return this;
         }
 

@@ -41,8 +41,9 @@
   <ItemGroup>
     <Compile Include="Bill.cs" />
     <Compile Include="DiscountStrategy\AffiliateStrategy.cs" />
-    <Compile Include="DiscountStrategy\EmployeeDiscount.cs" />
-    <Compile Include="DiscountStrategy\IDiscountStrategy.cs" />
+    <Compile Include="DiscountStrategy\CustomerStrategy.cs" />
+    <Compile Include="DiscountStrategy\AbstractDiscountStrategy.cs" />
+    <Compile Include="DiscountStrategy\EmployeeAbstractDiscount.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Invoice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

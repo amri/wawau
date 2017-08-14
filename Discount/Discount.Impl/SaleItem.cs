@@ -2,6 +2,19 @@
 {
     public class SaleItem
     {
-        public decimal Price { get; set; }
+        public SaleItem(decimal price, ItemType itemType)
+        {
+            Price = price;
+            ItemType = itemType;
+        }
+
+        public decimal Price { get; }
+        private ItemType ItemType { get; }
+    }
+
+    public enum ItemType
+    {
+        Grocery,
+        NonGrocery
     }
 }

@@ -1,8 +1,8 @@
 namespace Discount.Impl.DiscountStrategy
 {
-    public class AffiliateStrategy : IDiscountStrategy
+    public class AffiliateStrategy : AbstractDiscountStrategy
     {
-        public decimal ApplyDiscount(decimal sale)
+        protected override decimal ApplyCustomDiscount(decimal sale)
         {
             return 0.9m * sale;
         }
