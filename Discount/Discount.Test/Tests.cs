@@ -1,5 +1,8 @@
 ﻿using System;
 using Discount.Impl;
+using Discount.Impl.Builder;
+using Discount.Impl.Entity;
+using Discount.Impl.Entity.User;
 using NUnit.Framework;
 
 namespace Discount.Test
@@ -12,9 +15,9 @@ namespace Discount.Test
         public void GivenAnEmployee_ThenReceive30pctDiscount()
         {
             var userBuilder = new UserBuilder();
-            var user = userBuilder.CreateUser(UserType.Employee).Build();
+            var user = userBuilder.CreateUser<Employee>().Build();
             var invoice = new Invoice();
-            SaleItem purchasedItem = new SaleItem(90,ItemType.NonGrocery);
+            Product purchasedItem = new Product(90,ProductType.NonGrocery);
             invoice.CreateInvoice(user);
             invoice.Buy(purchasedItem);
             var bill = invoice.Bill();
@@ -25,9 +28,9 @@ namespace Discount.Test
         public void GivenAnAffiliate_ThenReceive10pctDiscount()
         {
             var userBuilder = new UserBuilder();
-            var user = userBuilder.CreateUser(UserType.Affiliate).Build();
+            var user = userBuilder.CreateUser<Affiliate>().Build();
             var invoice = new Invoice();
-            SaleItem purchasedItem = new SaleItem(90, ItemType.NonGrocery);
+            Product purchasedItem = new Product(90, ProductType.NonGrocery);
             invoice.CreateInvoice(user);
             invoice.Buy(purchasedItem);
             var bill = invoice.Bill();
@@ -38,9 +41,9 @@ namespace Discount.Test
         public void GivenACustomer_WhenJoinedMoreThan2Years_ThenReceive5pctDiscount()
         {
             var userBuilder = new UserBuilder();
-            var user = userBuilder.CreateUser(UserType.Customer).AddJoinDate(DateTime.Now.AddYears(-2)).Build();
+            var user = userBuilder.CreateUser<Customer>().AddJoinDate(DateTime.Now.AddYears(-2)).Build();
             var invoice = new Invoice();
-            SaleItem purchasedItem = new SaleItem(90, ItemType.NonGrocery);
+            Product purchasedItem = new Product(90, ProductType.NonGrocery);
             invoice.CreateInvoice(user);
             invoice.Buy(purchasedItem);
             var bill = invoice.Bill();
@@ -51,9 +54,9 @@ namespace Discount.Test
         public void GivenEvery100s_ThenApply5DiscountEach()
         {
             var userBuilder = new UserBuilder();
-            var user = userBuilder.CreateUser(UserType.Customer).AddJoinDate(DateTime.Now.AddYears(-1)).Build();
+            var user = userBuilder.CreateUser<Customer>().AddJoinDate(DateTime.Now.AddYears(-1)).Build();
             var invoice = new Invoice();
-            SaleItem purchasedItem = new SaleItem(990m, ItemType.NonGrocery);
+            Product purchasedItem = new Product(990m, ProductType.NonGrocery);
             invoice.CreateInvoice(user);
             invoice.Buy(purchasedItem);
             var bill = invoice.Bill();
@@ -61,16 +64,18 @@ namespace Discount.Test
         }
         
         [Test]
-        public void GivenEvery100s_ThenApply5DiscountEach()
+        public void Given2MixedItemsPurchased_OnlyApplyDiscountsToNonGrocery()
         {
             var userBuilder = new UserBuilder();
-            var user = userBuilder.CreateUser(UserType.Customer).AddJoinDate(DateTime.Now.AddYears(-1)).Build();
+            var user = userBuilder.CreateUser<Customer>().AddJoinDate(DateTime.Now.AddYears(-2)).Build();
             var invoice = new Invoice();
-            SaleItem purchasedItem = new SaleItem(990m, ItemType.NonGrocery);
+            Product nonGroceryItem = new Product(90m, ProductType.NonGrocery);
+            Product groceryItem = new Product(90m, ProductType.Grocery);
             invoice.CreateInvoice(user);
-            invoice.Buy(purchasedItem);
+            invoice.Buy(nonGroceryItem);
+            invoice.Buy(groceryItem);
             var bill = invoice.Bill();
-            Assert.AreEqual(945m,bill.Total);
+            Assert.AreEqual(170.5m,bill.Total);
         }
     }
 }

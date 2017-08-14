@@ -1,10 +1,10 @@
-﻿namespace Discount.Impl
+﻿namespace Discount.Impl.Entity
 {
     public class Bill
     {
-        private readonly User _user;
+        private readonly Impl.User _user;
 
-        public Bill(User user)
+        public Bill(Impl.User user)
         {
             _user = user;
         }

@@ -1,17 +1,18 @@
 using System;
+using Discount.Impl.Entity.User;
 
 namespace Discount.Impl.DiscountStrategy
 {
-    public class CustomerStrategy : AbstractDiscountStrategy
+    public class CustomerDiscountStrategy : AbstractDiscountStrategy
     {
         private Customer _customer;
 
-        public CustomerStrategy(Customer customer)
+        public CustomerDiscountStrategy(Customer customer)
         {
             _customer = customer;
         }
 
-        protected override decimal ApplyCustomDiscount(decimal sale)
+        public override decimal ApplyPercentageDiscount(decimal sale)
         {
             if(DateTime.Now.Year - _customer.JoinedDate.Year >= 2)
                 return 0.95m * sale;

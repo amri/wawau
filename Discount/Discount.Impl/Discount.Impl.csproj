@@ -39,18 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bill.cs" />
-    <Compile Include="DiscountStrategy\AffiliateStrategy.cs" />
-    <Compile Include="DiscountStrategy\CustomerStrategy.cs" />
+    <Compile Include="Builder\Invoice.cs" />
+    <Compile Include="Builder\UserBuilder.cs" />
+    <Compile Include="DiscountStrategy\AffiliateDiscountStrategy.cs" />
+    <Compile Include="DiscountStrategy\CustomerDiscountStrategy.cs" />
     <Compile Include="DiscountStrategy\AbstractDiscountStrategy.cs" />
-    <Compile Include="DiscountStrategy\EmployeeAbstractDiscount.cs" />
-    <Compile Include="Employee.cs" />
-    <Compile Include="Invoice.cs" />
+    <Compile Include="DiscountStrategy\EmployeeDiscountStrategy.cs" />
+    <Compile Include="Entity\Bill.cs" />
+    <Compile Include="Entity\Product.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\User\Affiliate.cs" />
+    <Compile Include="Entity\User\Customer.cs" />
+    <Compile Include="Entity\User\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaleItem.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserBuilder.cs" />
-    <Compile Include="UserType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

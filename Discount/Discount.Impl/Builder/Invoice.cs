@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using Discount.Impl.DiscountStrategy;
+﻿using Discount.Impl.DiscountStrategy;
+using Discount.Impl.Entity;
+using Discount.Impl.Entity.User;
 
-namespace Discount.Impl
+namespace Discount.Impl.Builder
 {
     public class Invoice
     {
@@ -13,22 +14,25 @@ namespace Discount.Impl
             _bill = new Bill(user);
             if(user.GetType() == typeof(Employee))
             {
-                _abstractDiscountStrategy = new EmployeeAbstractDiscount();
+                _abstractDiscountStrategy = new EmployeeDiscountStrategy();
             }
             else if(user.GetType() == typeof(Affiliate))
             {
-                _abstractDiscountStrategy = new AffiliateStrategy();
+                _abstractDiscountStrategy = new AffiliateDiscountStrategy();
             }
             else if(user.GetType() == typeof(Customer))
             {
-                _abstractDiscountStrategy = new CustomerStrategy(user as Customer);
+                _abstractDiscountStrategy = new CustomerDiscountStrategy(user as Customer);
             }
             return this;
         }
         
-        public Invoice Buy(SaleItem item)
+        public Invoice Buy(Product item)
         {
-            _bill.Total = _bill.Total + item.Price;
+            var discountedPrice = (item.ProductType == ProductType.NonGrocery)
+                ? _abstractDiscountStrategy.ApplyPercentageDiscount(item.Price)
+                : item.Price;
+            _bill.Total = _bill.Total + discountedPrice;
             return this;
         }
         
